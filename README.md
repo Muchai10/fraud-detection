@@ -110,13 +110,12 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 ## Repository Structure
 
 ```
-fraud-detection-project/
-│── data/                 # Dataset (not uploaded, must be downloaded from Kaggle)
-│── notebooks/            # Jupyter notebooks for EDA & modeling
-│── src/                  # Scripts for preprocessing, models, utils
-│── results/              # Visualizations & model outputs
-│── README.md             # Documentation
-│── requirements.txt      # Dependencies
+fraud-detection/
+│── data/                      # Dataset (not uploaded, must be downloaded from Kaggle)
+│── README.md                  # Documentation
+│── fraud-detection.ipynb      # Jupyter notebooks for EDA & modeling
+|── fraud-detection.py         # Python Script
+|── Fraud-Detection.pdf        # Report
 ```
 
 ---
@@ -154,6 +153,7 @@ This project is licensed under the MIT License.
 
 * Dataset: [Kaggle – Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1)
 * Libraries: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
+
 
 
 
