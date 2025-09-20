@@ -9,7 +9,7 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 🎯 Objectives
+## Objectives
 
 * Explore the dataset and identify **fraud patterns**.
 * Preprocess and balance data for modeling.
@@ -20,10 +20,10 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 📊 Dataset
+## Dataset
 
-* **Source**: Kaggle – [Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1) *(link to correct version you used)*
-* **Size**: \~6.3 million rows
+* **Source**: Kaggle – [Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1) 
+* **Size**: \~3.1 million rows
 * **Features**:
 
   * `step`: Time unit of the transaction
@@ -36,7 +36,7 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 🛠️ Methodology
+## Methodology
 
 1. **Data Preprocessing**
 
@@ -72,21 +72,17 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 📈 Results
+## Results
 
-| Model               | Precision | Recall | F1-Score | ROC-AUC |
-| ------------------- | --------- | ------ | -------- | ------- |
-| Logistic Regression | 0.70      | 0.65   | 0.67     | 0.85    |
-| Random Forest       | 0.88      | 0.82   | 0.85     | 0.96    |
-| XGBoost             | 0.93      | 0.90   | 0.91     | 0.98    |
-
-* Fraud is heavily concentrated in **transfer** and **cash-out** transactions.
-* Fraudulent transactions are often **high-value** with suspicious balance shifts.
-* **XGBoost** consistently delivered the best performance.
+| **Model**               | **Accuracy** | **Precision** | **Recall** | **F1-Score** | **Notes**                                        |
+| ----------------------- | ------------ | ------------- | ---------- | ------------ | ------------------------------------------------ |
+| Logistic Regression     | 0.9995       | 0.9482        | 0.4533     | 0.6134       | High precision, low recall (misses many frauds)  |
+| Decision Tree (untuned) | 0.9997       | 0.8242        | 0.7771     | 0.8000       | Balanced, better recall than Logistic Regression |
+| Decision Tree (tuned)   | 0.9997       | 0.8004        | 0.8248     | 0.8124       | Best overall (improved F1 with tuning)           |
 
 ---
 
-## 💡 Key Insights
+## Key Insights
 
 * Fraud is **rare but very costly**.
 * **Balance differences** and **high-value transfers** are strong fraud signals.
@@ -95,7 +91,7 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 🌍 Impact & Relevance
+## Impact & Relevance
 
 * Stronger fraud detection reduces financial losses.
 * Builds **trust in mobile money ecosystems** like M-Pesa.
@@ -104,7 +100,7 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 🚀 Future Work
+## Future Work
 
 * Apply to **real-world mobile money datasets**.
 * Develop **real-time fraud detection system**.
@@ -113,7 +109,7 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 fraud-detection-project/
@@ -127,7 +123,7 @@ fraud-detection-project/
 
 ---
 
-## ⚙️ Installation & Usage
+## Installation & Usage
 
 1. Clone repository:
 
@@ -150,14 +146,15 @@ fraud-detection-project/
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License.
 
 ---
 
-## 🙌 Acknowledgments
+## Acknowledgments
 
 * Dataset: [Kaggle – Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1)
-* Libraries: Pandas, NumPy, Scikit-learn, XGBoost, Matplotlib, Seaborn
+* Libraries: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
+
 
