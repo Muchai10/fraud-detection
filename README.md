@@ -3,7 +3,7 @@
 
 This project applies **machine learning techniques** to detect fraudulent financial transactions using the **Synthetic Financial Datasets for Fraud Detection** from Kaggle.
 
-The dataset simulates real-world financial transactions at scale, with over **6 million records**, including both legitimate and fraudulent cases. The challenge is that fraud is **rare (<1%)**, making this a highly **imbalanced classification problem**.
+The dataset simulates real-world financial transactions at scale, with over **3 million records**, including both legitimate and fraudulent cases. The challenge is that fraud is **rare (<1%)**, making this a highly **imbalanced classification problem**.
 
 The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, Airtel Money, T-Kash), where fraud remains a serious threat to financial inclusion and trust.
 
@@ -156,5 +156,6 @@ This project is licensed under the MIT License.
 
 * Dataset: [Kaggle – Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1)
 * Libraries: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
+
 
 
