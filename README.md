@@ -60,15 +60,13 @@ The project is motivated by **Kenya’s mobile money ecosystem** (e.g., M-Pesa, 
 4. **Modeling**
 
    * Logistic Regression (baseline).
-   * Random Forest.
-   * XGBoost (state-of-the-art).
+   * Decision Tree.
 
 5. **Evaluation Metrics**
 
    * Precision
    * Recall
    * F1-score
-   * ROC-AUC
 
 ---
 
@@ -156,6 +154,7 @@ This project is licensed under the MIT License.
 
 * Dataset: [Kaggle – Synthetic Financial Datasets for Fraud Detection](https://www.kaggle.com/datasets/ealaxi/paysim1)
 * Libraries: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn
+
 
 
 
