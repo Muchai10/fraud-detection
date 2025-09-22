@@ -63,7 +63,7 @@ if duplicate_rows > 0:
     df.drop_duplicates(inplace=True)
     print(f"Number of rows after dropping duplicates: {df.shape[0]}")
 
-""" ## Handle missing values
+""" ## A. Handle missing values
 
  Here, I identified and addressed the missing values. I chose to handle them through the deletion technique.
 
@@ -80,7 +80,7 @@ df.dropna(inplace=True)
 print("\nMissing values after dropping rows:")
 print(df.isnull().sum())
 
-"""## Convert data types
+"""## B. Convert data types
 I transformed categorical variables into numerical formats using
 label encoding.
 """
@@ -100,7 +100,7 @@ display(df.head())
 print("\nData types after transformations:")
 df.info()
 
-"""## Normalize & Scale Data"""
+"""## C. Normalize & Scale Data"""
 
 # Separate features (X) and target (y)
 X = df.drop('isFraud', axis=1)
@@ -119,7 +119,8 @@ X_scaled = pd.DataFrame(X_scaled, columns=X.columns)
 print("Scaled Features:")
 display(X_scaled.head())
 
-"""# Exploratory Data Analysis (EDA)
+"""# 3. Exploratory Data Analysis (EDA)
+### A. Visualization of Data
  This includes visualizing data using histograms, scatter plots, and heatmaps, analyzing statistical properties, and identifying anomalies.
 """
 
@@ -160,7 +161,7 @@ sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
 plt.title('Correlation Matrix of Numerical Features')
 plt.show()
 
-"""## Analyze statistics
+"""## B. Analyze statistics
 
 """
 
@@ -176,9 +177,9 @@ display(df['isFraud'].value_counts())
 fraud_percentage = (df['isFraud'].sum() / df.shape[0]) * 100
 print(f"\nPercentage of fraudulent transactions: {fraud_percentage:.2f}%")
 
-"""## Identify anomalies
+"""## C. Identify anomalies
 
-I looked for outliers using visualizations like box plots or by examining extreme values.
+I looked for outliers using visualizations like box plots.
 
 """
 
@@ -193,7 +194,7 @@ plt.tight_layout()
 plt.suptitle('Box Plots of Numerical Features', y=1.02)
 plt.show()
 
-"""# Feature Engineering
+"""# 4. Feature Engineering
 I performed feature engineering on the dataset to create new features that might be relevant for fraud detection, handle outliers, and prepare the data for model training.
 """
 
@@ -230,11 +231,11 @@ X_scaled = pd.DataFrame(X_scaled, columns=X.columns)
 print("Scaled Features:")
 display(X_scaled.head())
 
-"""## Model Selection, Training & Evaluation
+"""## 5. Model Selection, Training & Evaluation
 
-Train and evaluate Logistic Regression and Decision Tree models for fraud detection, considering class imbalance for Decision Tree.
+I trained and evaluated Logistic Regression and Decision Tree models for fraud detection, considering class imbalance for Decision Tree.
 
-### Split data into training and testing sets.
+### A. Split data into training and testing sets.
 """
 
 # Split the scaled data into training and testing sets
@@ -256,7 +257,7 @@ decision_tree_model = DecisionTreeClassifier(random_state=42, class_weight='bala
 print("Logistic Regression Model:", logistic_model)
 print("Decision Tree Model:", decision_tree_model)
 
-"""### Train model
+"""### B. Train model
 
 
 """
@@ -271,7 +272,7 @@ print("Training Decision Tree model...")
 decision_tree_model.fit(X_train, y_train)
 print("Decision Tree model trained.")
 
-"""### Evaluate the performance of the models using appropriate metrics for imbalanced datasets (e.g., precision, recall, F1-score).
+"""### C. Evaluate the performance of the models using appropriate metrics for imbalanced datasets (i.e., accuracy, precision, recall, F1-score).
 
 """
 
@@ -312,7 +313,9 @@ display(confusion_matrix(y_test, y_pred_logistic))
 print("\nConfusion Matrix for Decision Tree:")
 display(confusion_matrix(y_test, y_pred_decision_tree))
 
-"""## Model optimization and reporting.
+"""## 6. Model optimization and reporting.
+### A. Hyperparemeter Tuning
+
 I tuned the hyperparameters of the models to improve performance.
 
 """
@@ -370,20 +373,75 @@ if f1_tuned_decision_tree > f1_decision_tree:
 else:
     print("\nTuned Decision Tree model did not significantly improve F1-score. Keeping untuned model.")
 
+"""### B. Cross Validation"""
+
+from sklearn.model_selection import cross_val_score
+
+# Perform cross-validation for Logistic Regression
+print("Performing cross-validation for Logistic Regression...")
+cv_scores_logistic = cross_val_score(logistic_model, X_scaled, y, cv=5, scoring='f1')
+print(f"Logistic Regression Cross-Validation F1-Scores: {cv_scores_logistic}")
+print(f"Mean F1-Score (Logistic Regression): {cv_scores_logistic.mean():.4f}")
+
+# Perform cross-validation for the original Decision Tree
+print("\nPerforming cross-validation for original Decision Tree...")
+cv_scores_decision_tree = cross_val_score(decision_tree_model, X_scaled, y, cv=5, scoring='f1')
+print(f"Decision Tree Cross-Validation F1-Scores: {cv_scores_decision_tree}")
+print(f"Mean F1-Score (Decision Tree): {cv_scores_decision_tree.mean():.4f}")
+
+# Perform cross-validation for the tuned Decision Tree
+print("\nPerforming cross-validation for tuned Decision Tree...")
+cv_scores_tuned_decision_tree = cross_val_score(best_decision_tree_model, X_scaled, y, cv=5, scoring='f1')
+print(f"Tuned Decision Tree Cross-Validation F1-Scores: {cv_scores_tuned_decision_tree}")
+print(f"Mean F1-Score (Tuned Decision Tree): {cv_scores_tuned_decision_tree.mean():.4f}")
+
+"""### A Bar Chart For The Report & Presentation to show Model Performance Comparison"""
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Metrics to plot
+metrics = ["Accuracy", "Precision", "Recall", "F1-Score"]
+
+# Create a DataFrame for plotting model performance
+model_performance = pd.DataFrame({
+    'Model': ['Logistic Regression', 'Decision Tree (Untuned)', 'Decision Tree (Tuned)'],
+    'Accuracy': [accuracy_logistic, accuracy_decision_tree, accuracy_tuned_decision_tree],
+    'Precision': [precision_logistic, precision_decision_tree, precision_tuned_decision_tree],
+    'Recall': [recall_logistic, recall_decision_tree, recall_tuned_decision_tree],
+    'F1-Score': [f1_logistic, f1_decision_tree, f1_tuned_decision_tree]
+})
+
+# Create bar chart
+model_performance.set_index("Model")[metrics].plot(kind="bar", figsize=(10,6))
+
+plt.title("Model Performance Comparison")
+plt.ylabel("Score")
+plt.ylim(0, 1.05)
+plt.legend(title="Metric")
+plt.grid(axis="y", linestyle="--", alpha=0.7)
+plt.show()
+
 """## Summary:
 
-### Data Analysis Key Findings
+### Key Results
 
 * The dataset was successfully split into training (80%) and testing (20%) sets, resulting in 2,513,214 training samples and 628,304 testing samples, each with 12 features.
-* Both Logistic Regression and Decision Tree models were selected and instantiated for fraud detection, with the Decision Tree using `class_weight='balanced'` to address class imbalance.
+* Both Logistic Regression and Decision Tree models were selected and instantiated for fraud detection, with the Decision Tree using class_weight='balanced' to address class imbalance.
 * Both models were successfully trained on the training data.
 * Evaluation metrics for the Logistic Regression model on the test set were: Accuracy: 0.9995, Precision: 0.9482, Recall: 0.4533, F1-Score: 0.6134.
 * Evaluation metrics for the untuned Decision Tree model on the test set were: Accuracy: 0.9997, Precision: 0.8242, Recall: 0.7771, F1-Score: 0.8000.
-* Hyperparameter tuning for the Decision Tree using `RandomizedSearchCV` resulted in slightly improved performance, with the tuned model achieving an F1-Score of 0.8124 on the test set.
+* Hyperparameter tuning for the Decision Tree using RandomizedSearchCV resulted in slightly improved performance, with the tuned model achieving an F1-Score of 0.8124 on the test set.
 * The tuned Decision Tree model was selected as the preferred model due to its improved F1-score compared to the untuned version.
 
-### Insights or Next Steps
+### Cross-Validation Results
+
+* Logistic Regression Mean F1-Score: 0.6510
+* Original Decision Tree Mean F1-Score: 0.5557
+* Tuned Decision Tree Mean F1-Score: 0.5557
+
+### Insights
 
 * The Decision Tree model with balanced class weights and tuned hyperparameters demonstrates better performance in identifying fraudulent transactions compared to Logistic Regression, based on the F1-score.
-* Further investigation could involve evaluating other models suitable for imbalanced data (e.g., Random Forest, Gradient Boosting) or exploring techniques like oversampling or undersampling to potentially improve performance further.
+
 """
